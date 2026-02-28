@@ -9,6 +9,8 @@
 
 <h3>Excel 数字组合求和</h3>
 
+<div th:if="${error}" class="alert alert-danger mt-3" th:text="${error}"></div>
+
 <form th:action="@{/sum/upload}" method="post" enctype="multipart/form-data" class="mt-4">
 
     <div class="mb-3">
@@ -24,6 +26,10 @@
 
     <button type="submit" class="btn btn-primary">开始计算</button>
 </form>
+<footer class="mt-5 pt-3 border-top text-center text-muted small">
+    &copy; 2025 WangZiyu. 版权所有<br>
+    ICP备案号：豫ICP备2022003430号-2
+</footer>
 
 </body>
 </html>

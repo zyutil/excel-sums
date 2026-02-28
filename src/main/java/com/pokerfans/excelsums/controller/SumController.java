@@ -35,6 +35,16 @@ public class SumController {
                 .distinct()
                 .toList();
 
+        if (numbers.stream().anyMatch(n -> n < 0)) {
+            model.addAttribute("error", "Excel 中不允许出现负数。");
+            return "upload";
+        }
+
+        if (targets.stream().anyMatch(t -> t < 0)) {
+            model.addAttribute("error", "目标值不允许为负数。");
+            return "upload";
+        }
+
         model.addAttribute(
                 "resultMap",
                 service.calculate(numbers, targets)

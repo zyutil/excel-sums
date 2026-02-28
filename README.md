@@ -30,3 +30,39 @@
 | [7.0, 3.2]              | 10.2 |
 | [3.2, 2.3, 1.5, 3.2...] | ...  |
 
+## Docker 打包与上传
+
+### 1. 本地构建镜像
+
+```bash
+docker build -t excel-sums:latest .
+```
+
+### 2. 打标签并推送到镜像仓库（推荐）
+
+以 Docker Hub 为例：
+
+```bash
+docker login
+docker tag excel-sums:latest <你的DockerHub用户名>/excel-sums:latest
+docker push <你的DockerHub用户名>/excel-sums:latest
+```
+
+### 3. 服务器拉取并运行
+
+在服务器执行：
+
+```bash
+docker pull <你的DockerHub用户名>/excel-sums:latest
+docker run -d --name excel-sums -p 8080:8080 --restart unless-stopped <你的DockerHub用户名>/excel-sums:latest
+```
+
+访问地址：`http://<服务器IP>:8080`
+
+### 4. 不经过镜像仓库，直接上传到服务器（可选）
+
+```bash
+docker save -o excel-sums.tar excel-sums:latest
+scp excel-sums.tar <服务器用户>@<服务器IP>:/tmp/
+ssh <服务器用户>@<服务器IP> "docker load -i /tmp/excel-sums.tar && docker run -d --name excel-sums -p 8080:8080 --restart unless-stopped excel-sums:latest"
+```
